@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+ 
+\author{Me}
+
+\newcounter{stepnum}
+\newenvironment{step}[1][]{\refstepcounter{stepnum}\par\medskip
+   \textbf{Step~\thestepnum #1:} \rmfamily}{\medskip}
+   
+\makeatletter
+\AtEndDocument{
+  \immediate\write\@auxout{% \immediate is unnecessary
+    \global\noexpand\@namedef{steptotal}{\number\c@stepnum}% Also can use \thestepnum instead of \number\c@stepnum
+  }%
+}
+\title{How to (do something) in \@nameuse{steptotal} easy steps}
+\makeatother
+
+% This complains that no title is given
+% \AtEndDocument{
+%     \title{How to (do something) in \thestepnum easy steps}
+% }
+
+\begin{document}
+
+\maketitle
+
+Introduction
+
+\begin{step} \label{step:1}
+Step \ref{step:1}
+\end{step}
+ 
+\begin{step}
+Step \thestepnum
+\end{step}
+ 
+\section{Section}
+Section \thesection
+ 
+\begin{step}%\label{ref:laststep}
+This is the first step in the last section. 
+\end{step}
+
+\begin{step}
+Oh no! There is a new step!
+\end{step}
+
+\end{document}
